@@ -1,5 +1,5 @@
 [project]
-name = "scientific-project-template"
+name = "scipython"
 version = "0.1.0"
 description = "A modern Python template for scientific computing at the UoN School of Physics"
 readme = "README.md"
