@@ -13,3 +13,5 @@ ENV/
 
 # VS Code User-Specific Interface States
 .vscode/*
+
+.scripts/*
