@@ -1,34 +1,28 @@
 import sys, subprocess, datetime, json, os
 
-def get_code_lines(file_path):
+def get_meaningful_lines(file_path):
     ext = os.path.splitext(file_path)[1]
-    
     try:
+        lines = []
         if ext == '.ipynb':
             with open(file_path, 'r', encoding='utf-8') as f:
                 nb = json.load(f)
-                # Count lines only in 'code' cells
-                total_lines = 0
                 for cell in nb.get('cells', []):
                     if cell.get('cell_type') == 'code':
-                        # Sum the number of lines in each code cell
-                        total_lines += len(cell.get('source', []))
-                return total_lines
-        
+                        lines.extend(cell.get('source', []))
         elif ext in ['.py', '.md']:
             with open(file_path, 'r', encoding='utf-8') as f:
-                return len(f.readlines())
+                lines = f.readlines()
         
-        else:
-            return 0
+        # This is the fix: Only count lines that aren't just empty or whitespace
+        meaningful_lines = [l for l in lines if l.strip()]
+        return len(meaningful_lines)
     except Exception:
         return 0
 
-# Main execution logic
 file_path = sys.argv[1]
 timestamp = datetime.datetime.now().strftime('%H:%M:%S')
-line_count = get_code_lines(file_path)
+line_count = get_meaningful_lines(file_path)
 
 subprocess.run(['git', 'add', file_path], capture_output=True)
-result = subprocess.run(['git', 'commit', '-m', f'Time: {timestamp} | Num_newlines: {line_count}'], capture_output=True)
-
+subprocess.run(['git', 'commit', '-m', f'Time: {timestamp} | Num_newlines: {line_count}'], capture_output=True)
