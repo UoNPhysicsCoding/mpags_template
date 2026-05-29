@@ -1,59 +1,110 @@
 {
-    "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-    "python.terminal.activateEnvInTerminal": true,
-    "jupyter.jupyterServerType": "local",
-    "python.analysis.typeCheckingMode": "basic",
-    
-    // Minimises noisy notification pop-ups from extensions
-    "workbench.banner.enabled": false,
-    
-    // Hides the minimap on the right side of the code editor to maximise screen space
-    "editor.minimap.enabled": false,
-    
-    // Prevents advanced source control decorations from cluttering the file list
-    "scm.decorations.enabled": false,
+  // ==========================================
+  // GROUP 1: UV, PYTHON, & KERNEL CONFIGURATION
+  // ==========================================
 
-        "files.exclude": {
-        "**/.*": true,
-        "**/.venv": true,
-        "**/__pycache__": true,
-        "uv.lock":true,
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+   "python.analysis.typeCheckingMode": "basic",
 
-    },
+  // THE FIX: Forces Jupyter to default to the environment matching our workspace path
+  "jupyter.kernels.excludePythonEnvironments": [
+    "/usr/bin/python*",
+    "/usr/local/bin/python*",
+    "C:\\Python*",
+    "~\\AppData\\Local\\Programs\\Python\\*"
+],
+
+"jupyter.interactiveWindow.creationMode": "perNotebook",
+"notebook.cellToolbarLocation": {
+"default": "right"
+},
 
 
-    //Interactive window setup
-    "jupyter.execSelectionInteractive": true,
-    "python.REPL.sendToNativeREPL": false,
-    "jupyter.interactiveWindow.textEditor.executeSelection": true,
-    "jupyter.interactiveWindow.creationMode": "perNotebook",
-    "jupyter.interactiveWindow.textEditor.executeSelection": true,
-    "notebook.cellToolbarLocation": {
-        "default": "right"
-    },
+  // ==========================================
+  // GROUP 2: VSCODE APPEARANCE & CLUTTER CONTROL
+  // ==========================================
+  
+  // Hide clutter files we don't want students messing with (like .git, .vscode, etc.)
+  "files.exclude": {
+    "**/.*": false, 
+    "**/.venv": false,
+    "**/__pycache__": true,
+    "uv.lock": true
+  },
 
-    // Keeps the primary file explorer and internal tool tabs to a predictable width
-    "workbench.editor.editorGroupsMode": "grid",
-    // Prevents the Interactive Window from hijacking focus and expanding to fill the editor space
-    "workbench.editor.openSideBySideDirection": "right",
-    // Forces the Jupyter variable viewer to open inside a dedicated panel rather than a full editor tab
-    "notebook.experimental.useSeparateVariablesView": true,
-    // Forces the bottom panel to occupy a sensible, smaller region instead of blowing up to full height
-    "workbench.panel.opensMaximized": "never",
-    // Clamps the default vertical height of the terminal panel when it first opens (in pixels)
-    "terminal.integrated.defaultHeight": 350,
-    // Prevents the terminal from pushing past the center grid boundary
-    "workbench.panel.defaultLocation": "bottom",
-    // Limits the terminal panel's horizontal sprawl if it ever gets dragged to the side
-    "terminal.integrated.defaultWidth": 400,
-    // Some tweaks to remove visual complexity of editor
-    "workbench.statusBar.visible": false,
-    "workbench.layoutControl.enabled": false,
-    "editor.breadcrumbs.enabled": false,
-    "editor.stickyScroll.enabled": false,
-    "editor.guides.indentation": false,
-    "editor.foldEndControls": "never",
-    "editor.showFoldingControls": "never",
-    "editor.lightbulb.enabled": "off",
-    "editor.codeLens": false,
+  // Hides the minimap on the right side of the code editor to maximise screen space
+  "editor.minimap.enabled": false,
+  
+  // Prevents advanced source control decorations from cluttering the file list
+  "scm.decorations.enabled": true,
+
+  // Keeps the primary file explorer and internal tool tabs to a predictable width
+  "workbench.editor.editorGroupsMode": "grid",
+  
+  // Prevents the Interactive Window from hijacking focus and expanding to fill the editor space
+  "workbench.editor.openSideBySideDirection": "right",
+  
+  // Forces the bottom panel to occupy a sensible, smaller region instead of blowing up to full height
+  "workbench.panel.opensMaximized": "never",
+  
+  // Clamps the default vertical height of the terminal panel when it first opens (in pixels)
+  "terminal.integrated.defaultHeight": 350,
+  
+  // Prevents the terminal from pushing past the center grid boundary
+  "workbench.panel.defaultLocation": "bottom",
+  
+  // Limits the terminal panel's horizontal sprawl if it ever gets dragged to the side
+  "terminal.integrated.defaultWidth": 400,
+  
+  // Visual tweaks to completely clear distraction and environment complexity for beginners
+  "workbench.statusBar.visible": true,
+  "workbench.layoutControl.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.guides.indentation": false,
+  "editor.showFoldingControls": "never",
+  "editor.lightbulb.enabled": "off",
+  "editor.codeLens": false,
+
+  
+  "scm.diffDecorations": "none",
+
+  // ==========================================
+  // GROUP 3: EDITOR FUNCTIONALITY & AUTOMATION
+  // ==========================================
+  
+  // Keeps the focus on the actual code editor on startup
+  "workbench.startupEditor": "none",
+  "explorer.compactFolders": false,
+  
+  // Copilot Setup: Enabled globally so they can use the Chat Sidebar/Tutor Prompt,
+  // but inline "ghost text" suggestions are disabled so it doesn't write code for them.
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": false,
+    "plaintext": false
+  },
+  "editor.inlineSuggest.enabled": false,
+  
+
+  // ==========================================
+  // GROUP 4: AUTOMATED PROGRESS TRACKING (GITDOC)
+  // ==========================================
+ // ==========================================
+  // BACKGROUND PROGRESS TRACKING ENGINE
+  // ==========================================
+  // Automatic saving of student work (10 seconds of inactivity)
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 10000,
+
+  "emeraldwalk.runonsave": {
+    "autoClearConsole": true,
+    "commands": [
+      {
+        // 1. Matches any changes to Python scripts, Notebooks, or Markdown files
+        "match": "\\.(py|ipynb|md)$",
+        // 2. Stages the specific file that changed, logs it with a timestamp, and pushes to GitHub Classroom
+        "cmd": "git add ${file} && git commit -m \"Snapshot: ${date}\" && git push origin main"
+      }
+    ]
+}
 }

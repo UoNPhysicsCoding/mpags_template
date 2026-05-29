@@ -1,15 +1,8 @@
 {
-    "recommendations": [
-        // Core Python language support, debugging, and linting
-        "ms-python.python",
-        
-        // Advanced code intelligence, auto-completion, and type-checking navigation
-        "ms-python.vscode-pylance",
-        
-        // The foundational Jupyter engine required to spin up background kernels
-        "ms-toolsai.jupyter",
-        
-        // Renders visual notebook cells, variable tables, and interactive layouts inside VS Code
-        "ms-toolsai.jupyter-renderers"
-    ]
+   "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "emeraldwalk.runonsave"
+  ]
 }
+

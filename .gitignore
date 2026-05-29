@@ -1,10 +1,16 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# Virtual Environments (Built by uv sync)
+.venv/
+venv/
+ENV/
 
-# Virtual environments
-.venv
+# Python Cache & System Files
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# VS Code User-Specific Interface States
+.vscode/project-state
+.vscode/tasks.log
