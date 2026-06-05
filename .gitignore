@@ -12,6 +12,5 @@ ENV/
 .mypy_cache/
 
 # VS Code User-Specific Interface States
-
 .scripts/*
 
