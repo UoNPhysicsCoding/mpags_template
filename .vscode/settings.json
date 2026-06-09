@@ -1,6 +1,5 @@
 {
   // --- 1. Academic & Environment Setup ---
-  "academicCohort": "year4q",
   "python.venvFolders": [],
   "python.venvPath": [],
   "python.analysis.typeCheckingMode": "basic",
@@ -65,15 +64,26 @@
 
   // --- 5. Automation & Audit ---
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 5000,
+  "files.autoSaveDelay": 30000,
   "emeraldwalk.runonsave": {
     "autoClearConsole": false,
     "commands": [
       {
         "match": "\\.py$",
         "cmd": "uv run --no-project .scripts/audit.py",
-        "isAsync": false
+        "isAsync": false,
       }
     ]
+  },
+
+  // --- 6. UV and Onedrive ----
+  "terminal.integrated.env.windows": {
+    "UV_PROJECT_ENVIRONMENT": "${env:LOCALAPPDATA}\\uv_envs\\${workspaceFolderBasename}"
+  },
+  "terminal.integrated.env.linux": {
+    "UV_PROJECT_ENVIRONMENT": "${workspaceFolder}/.venv"
+  },
+  "terminal.integrated.env.osx": {
+    "UV_PROJECT_ENVIRONMENT": "${workspaceFolder}/.venv"
   }
 }
