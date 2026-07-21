@@ -1,7 +1,5 @@
 {
   // --- 1. Academic & Environment Setup ---
-  "python.venvFolders": [],
-  "python.venvPath": [],
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.autoImportCompletions": false,
   "python.analysis.exclude": ["**/miniconda3/**"],
@@ -14,7 +12,7 @@
     "C:\\Python*",
     "D:\\Python*"
   ],
-  "jupyter.interactiveWindow.creationMode": "perNotebook",
+  "jupyter.interactiveWindow.creationMode": "perFile",
   "jupyter.widgetScriptSources": [],
   "notebook.cellToolbarLocation": {
     "default": "right",
@@ -55,35 +53,21 @@
     "**/.*": false,
     "**/.venv": false,
     "**/__pycache__": true,
-    "uv.lock": true,
-    ".gitignore": true
+    "uv.lock": false,
+    ".gitignore": false
   },
   "git.enabled": true,
   "git.ignoreMissingGitWarning": true,
-  "scm.diffDecorations": "none",
+  "scm.diffDecorations": "none", 
 
-  // --- 5. Automation & Audit ---
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 30000,
-  "emeraldwalk.runonsave": {
-    "autoClearConsole": false,
-    "commands": [
-      {
-        "match": "\\.py$",
-        "cmd": "uv run --no-project .scripts/audit.py",
-        "isAsync": false,
-      }
-    ]
-  },
-
-  // --- 6. UV and Onedrive ----
   "terminal.integrated.env.windows": {
-    "UV_PROJECT_ENVIRONMENT": "${env:LOCALAPPDATA}\\uv_envs\\${workspaceFolderBasename}"
-  },
-  "terminal.integrated.env.linux": {
-    "UV_PROJECT_ENVIRONMENT": "${workspaceFolder}/.venv"
+    "UV_PROJECT_ENVIRONMENT": "${env:LOCALAPPDATA}\\uv_envs\\${workspaceFolderBasename}_env"
   },
   "terminal.integrated.env.osx": {
-    "UV_PROJECT_ENVIRONMENT": "${workspaceFolder}/.venv"
+    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}_env"
+  },
+  "terminal.integrated.env.linux": {
+    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}_env"
   }
+
 }
