@@ -60,12 +60,18 @@ def run():
     # Run uv sync using the target environment explicitly
     subprocess.run(["uv", "sync", "--project", str(pathlib.Path.cwd())], env=env, check=True)
     
-    new_path = safe_path.joinpath(Path("Scripts"))
+    if platform.system() == "Windows":
+        new_python_path = safe_path.joinpath(Path("Scripts")).joinpath(Path("python.exe"))
+        new_activate_path = safe_path.joinpath(Path("Scripts")).joinpath(Path("activate"))
+    else:
+        new_python_path = safe_path.joinpath(Path("bin")).joinpath(Path("python"))
+        new_activate_path = safe_path.joinpath(Path("bin")).joinpath(Path("activate"))
 
     print(f"\nEnvironment files stored at {safe_path}")
     print("Setup complete.")
-    print(f"Select Python Interpreter: {new_path.joinpath(Path("python.exe"))}")
-    print(f"Activate in terminal: {new_path.joinpath(Path("activate"))}")
+    print(f"Select Python Interpreter: {new_python_path}")
+    print(f"Activate in terminal: {new_activate_path.joinpath(Path("activate"))}")
+    print(f"If on Mac or Linux may need to chmod +x to enable permissions for activation")
 
 
 if __name__ == '__main__':
