@@ -68,6 +68,9 @@
   },
   "terminal.integrated.env.linux": {
     "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}_env"
-  }
+  },
 
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "bash",
 }
