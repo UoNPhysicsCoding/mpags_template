@@ -22,14 +22,10 @@ dependencies = [
     "requests",
     "requests-cache",
     "beautifulsoup4",
-]
-
-[dependency-groups]
-# Development dependencies needed for interactive work, testing, and IDE support
-dev = [
     "ipython>=8.20.0",
     "jupyter>=1.0.0",
     "ipykernel>=6.29.0",
 ]
+
 
 
