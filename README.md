@@ -8,11 +8,7 @@ The alternative is to put your .venv folder somewhere else. We provide a script 
 
 - Navigate into the folder you cloned in file explorer
 - double click `setup_windows.bat`
-- open a cmd prompt (right click in file explorer) and type: 
-
-```bash
-`code .`
-```
+- follow the instructions
 
 Add this to the .vscode/settings.json (this has been done for the current project)
 
