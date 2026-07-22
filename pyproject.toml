@@ -24,7 +24,7 @@ dependencies = [
     "beautifulsoup4",
     "ipython>=8.20.0",
     "jupyter>=1.0.0",
-    "ipykernel>=6.29.0",
+    "ipykernel>=6.0.0, <7.0.0",
 ]
 
 
