@@ -6,6 +6,45 @@ import sys
 import time
 import shutil
 from pathlib import Path
+import importlib
+
+
+
+def verify_environment(new_python_path: str | pathlib.Path) -> None:
+    """Verifies that key packages import successfully using the specified Python executable.
+
+    Raises RuntimeError if any import fails.
+    """
+    packages = ["numpy", "pandas", "matplotlib", "scipy"]
+    python_exe = pathlib.Path(new_python_path)
+
+    # Python code executed inside the target environment
+    code = f"""
+        packages = {packages!r}
+        for pkg in packages:
+            __import__(pkg)
+        """
+
+    result = subprocess.run(
+        [str(python_exe), "-c", code],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Failed to import required packages using {python_exe}.\n"
+            f"Error output:\n{result.stderr.strip()}"
+        )
+
+    # ANSI escape codes: \033[32m sets green text, \033[0m resets back to default
+    GREEN = "\033[32m"
+    RESET = "\033[0m"
+
+    print(
+        f"{GREEN} Success! All packages ({', '.join(packages)}) imported correctly.{RESET}"
+    )
+
 
 def run():
 
@@ -66,6 +105,10 @@ def run():
     else:
         new_python_path = safe_path.joinpath(Path("bin")).joinpath(Path("python"))
         new_activate_path = safe_path.joinpath(Path("bin")).joinpath(Path("activate"))
+
+    print("=======================================================================")
+    print("\n Performing environment checks...\n")
+    verify_environment(new_python_path)
 
     print(f"\n\n\n==========================================================\n")
     print(f"Setup Instructions:\n")
