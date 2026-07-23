@@ -2,21 +2,12 @@
 
 The simplest solution is not to use Onedrive at all, but then this obviously loses the benefits of syncing / backing up. 
 
-The alternative is to put your .venv folder somewhere else. We provide a script for each OS which does this for you:
+The alternative is to put your .venv folder somewhere else. We provide a script for each OS which does this for you. It also configures and checks a few things to make the process easier:
 
 ## Windows
 
 - Navigate into the folder you cloned in file explorer
 - double click `setup_windows.bat`
-- follow the instructions
-
-Add this to the .vscode/settings.json (this has been done for the current project)
-
-```json
- "terminal.integrated.env.windows": {
-    "UV_PROJECT_ENVIRONMENT": "${env:LOCALAPPDATA}\\uv_envs\\${workspaceFolderBasename}"
-  },
-```
 
 ## Mac
 
@@ -28,16 +19,6 @@ Type the following commands one at a time into the terminal:
 ```bash
 chmod +x setup_mac.sh
 ./setup_mac.sh
-code .
-```
-
-
-Add the following to .vscode/settings.json (this has been done for the current project)
-
-```json
-  "terminal.integrated.env.osx": {
-    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}"
-  }
 ```
 
 ## Linux
@@ -50,15 +31,6 @@ Type the following commands one at a time into the terminal:
 ```bash
 chmod +x setup_linux.sh
 ./setup_linux.sh
-code .
-```
-
-Add the following to .vscode/settings.json (this has been done for the current project)
-
-```json
-  "terminal.integrated.env.linux": {
-    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}"
-  },
 ```
 
 

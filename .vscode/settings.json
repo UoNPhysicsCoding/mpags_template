@@ -1,5 +1,78 @@
 {
-    "python.defaultInterpreterPath": "C:/Users/mikei/AppData/Local/uv_envs/mpags_template_env/Scripts/python.exe",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt",
-    "jupyter.preferredJupyterKernel": "mpags_template_env"
+  // --- 1. Academic & Environment Setup ---
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": false,
+  "python.analysis.exclude": ["**/miniconda3/**"],
+  "jupyter.kernels.excludePythonEnvironments": [
+    "/usr/bin/python*",
+    "/usr/local/bin/python*",
+    "${userHome}/AppData/Local/Programs/Python/*",
+    "${userHome}/.pyenv/**",
+    "${userHome}/miniconda3/**",
+    "C:\\Python*",
+    "D:\\Python*"
+  ],
+  "jupyter.interactiveWindow.creationMode": "perFile",
+  "jupyter.widgetScriptSources": [],
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "right"
+  },
+
+  // --- 2. VS Code Appearance & Editor UI ---
+  "window.zoomLevel": 1,
+  "editor.minimap.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.guides.indentation": false,
+  "editor.showFoldingControls": "never",
+  "editor.lightbulb.enabled": "off",
+  "editor.codeLens": false,
+  "editor.inlineSuggest.enabled": true,
+  "workbench.editor.openSideBySideDirection": "right",
+  "workbench.panel.opensMaximized": "never",
+  "workbench.panel.defaultLocation": "bottom",
+  "workbench.statusBar.visible": true,
+  "workbench.layoutControl.enabled": false,
+  "workbench.startupEditor": "none",
+  "explorer.compactFolders": false,
+
+  // --- 3. AI Features (Copilot & Chat) ---
+  "github.copilot.enable": { "*": false, "plaintext": false, "markdown": false },
+  "github.copilot.chat.organizationCustomAgents.enabled": false,
+  "chat.agent.enabled": false,
+  "github.copilot.chat.agent.autoFix": false,
+  "github.copilot.chat.claudeAgent.enabled": false,
+  "github.copilot.chat.backgroundAgent.enabled": false,
+  "github.copilot.chat.agent.backgroundTodoAgent.enabled": false,
+  "github.copilot.chat.alternateGptPrompt.enabled": false,
+  "chat.disableAIFeatures": false,
+
+  // --- 4. Git & File Management ---
+  "files.exclude": {
+    "**/.git": false,
+    "**/.*": false,
+    "**/.venv": false,
+    "**/__pycache__": true,
+    "uv.lock": false,
+    ".gitignore": false
+  },
+  "git.enabled": true,
+  "git.ignoreMissingGitWarning": true,
+  "scm.diffDecorations": "none", 
+
+  "terminal.integrated.env.windows": {
+    "UV_PROJECT_ENVIRONMENT": "${env:LOCALAPPDATA}\\uv_envs\\${workspaceFolderBasename}_env"
+  },
+  "terminal.integrated.env.osx": {
+    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}_env"
+  },
+  "terminal.integrated.env.linux": {
+    "UV_PROJECT_ENVIRONMENT": "${env:HOME}/.cache/uv_envs/${workspaceFolderBasename}_env"
+  },
+
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "python.defaultInterpreterPath": "C:/Users/mikei/AppData/Local/uv_envs/mpags_template_env/Scripts/python.exe",
+  "jupyter.preferredJupyterKernel": "mpags_template_env"
 }

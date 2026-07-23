@@ -2,6 +2,7 @@ import json
 import os
 import pathlib
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -66,28 +67,52 @@ def register_jupyter_kernel(python_exe: pathlib.Path, kernel_name: str) -> None:
     )
 
 
+def upsert_setting(json_str: str, key: str, value: object) -> str:
+    """Safely updates or injects a key into a JSON string without breaking comments or formatting."""
+    val_str = json.dumps(value)
+    pattern = re.compile(
+        r'("' + re.escape(key) + r'"\s*:\s*)(true|false|null|-?\d+(?:\.\d+)?|"(?:\\.|[^"\\])*")',
+        re.IGNORECASE,
+    )
+
+    if pattern.search(json_str):
+        val_str_escaped = val_str.replace("\\", "\\\\")
+        return pattern.sub(r"\g<1>" + val_str_escaped, json_str, count=1)
+
+    last_brace_idx = json_str.rfind("}")
+    if last_brace_idx != -1:
+        before = json_str[:last_brace_idx].rstrip()
+        if not before.endswith(",") and not before.endswith("{"):
+            before += ","
+        return before + f'\n  "{key}": {val_str}\n}}\n'
+
+    return json_str
+
+
 def configure_vscode_settings(new_python_path: pathlib.Path, kernel_name: str) -> None:
-    """Appends/updates .vscode/settings.json to point to the new interpreter and kernel."""
+    """Safely updates .vscode/settings.json without removing existing comments or settings."""
     vscode_dir = pathlib.Path.cwd() / ".vscode"
     vscode_dir.mkdir(exist_ok=True)
     settings_path = vscode_dir / "settings.json"
 
-    settings = {}
     if settings_path.exists():
-        try:
-            with open(settings_path, "r", encoding="utf-8") as f:
-                settings = json.load(f)
-        except json.JSONDecodeError:
-            pass
+        with open(settings_path, "r", encoding="utf-8") as f:
+            settings_content = f.read()
+    else:
+        settings_content = "{\n}"
 
-    # Update relevant paths for local VS Code context
-    settings["python.defaultInterpreterPath"] = new_python_path.as_posix()
-    settings["terminal.integrated.defaultProfile.windows"] = "Command Prompt"
-    
-    settings["jupyter.preferredJupyterKernel"] = kernel_name
+    settings_content = upsert_setting(
+        settings_content, "python.defaultInterpreterPath", new_python_path.as_posix()
+    )
+    settings_content = upsert_setting(
+        settings_content, "terminal.integrated.defaultProfile.windows", "Command Prompt"
+    )
+    settings_content = upsert_setting(
+        settings_content, "jupyter.preferredJupyterKernel", kernel_name
+    )
 
     with open(settings_path, "w", encoding="utf-8") as f:
-        json.dump(settings, f, indent=4)
+        f.write(settings_content)
 
 def launch_vscode() -> None:
     """Launches VS Code in the current working directory."""
